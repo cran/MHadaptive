@@ -31,7 +31,7 @@ function(li_func,pars,prop_sigma=diag(1,length(pars)),par_names=NULL,iterations=
         
         	trace[i,]<-k_X	
                 deviance[i]<-(-2*pi_X)                      # Store the deviance for calculating DIC
-		if(i > adapt_par[1] && i %% adapt_par[2] == 0 && i > (adapt_par[4]*iterations) )	        # adapt the proposal covariance structure
+		if(i > adapt_par[1] && i %% adapt_par[2] == 0 && i < (adapt_par[4]*iterations) )	        # adapt the proposal covariance structure
 		{   
                     len<-floor(i*adapt_par[3]):i
                     x<-trace[len,]
@@ -47,19 +47,21 @@ function(li_func,pars,prop_sigma=diag(1,length(pars)),par_names=NULL,iterations=
     trace<-trace[burn_in:iterations,]
     DIC<-NULL
     ## Calculate the DIC
+    D_bar<-mean(deviance[burn_in:iterations])
     if(length(pars)>1)
     {
-        D_bar<-mean(deviance[burn_in:iterations])
         theta_bar<-sapply(1:length(pars),function(x){mean( trace[,x] )})
-        D_hat<-li_func(theta_bar,...)
-        pD<-D_bar-D_hat
-        DIC<-D_hat + 2*pD
-    }
+    }else
+        theta_bar<-mean( trace )
+
+    D_hat<-li_func(theta_bar,...)
+    pD<-D_bar-D_hat
+    DIC<-D_hat + 2*pD
     ##
     if(length(pars)>1)
         accept_rate<-length(unique(trace[,1]))/(iterations-burn_in) else
     accept_rate<-length(unique(trace))/(iterations-burn_in)
-
-	return(list("trace"=trace,"prop_sigma"=prop_sigma,"par_names"=par_names,"DIC"=DIC,'acceptance_rate'=accept_rate))
+    val<-list("trace"=trace,"prop_sigma"=prop_sigma,"par_names"=par_names,"DIC"=DIC,'acceptance_rate'=accept_rate)
+    class(val)<-"MHposterior"
+	return(val)
 }
-
