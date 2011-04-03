@@ -12,8 +12,8 @@ Performs general Metropolis-Hastings Markov Chain Monte Carlo sampling of a user
 \tabular{ll}{
 Package: \tab MHadaptive\cr
 Type: \tab Package\cr
-Version: \tab 1.1-2\cr
-Date: \tab 2011-04-03\cr
+Version: \tab 1.1-3\cr
+Date: \tab 2011-10-13\cr
 License: \tab GPL (>= 3)\cr
 LazyLoad: \tab yes\cr
 }
