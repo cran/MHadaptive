@@ -22,7 +22,7 @@ function(li_func,pars,prop_sigma=diag(1,length(pars)),par_names=NULL,iterations=
     announce<-floor(seq(iterations/10,iterations,length.out=10))
 	for(i in 1:iterations)
 	{
-	        k_Y<-rmnorm(1,Sigma=prop_sigma,mu=k_X)	# Draw proposal point
+	        k_Y<-mvrnorm(1,mu=k_X,Sigma=prop_sigma)	# Draw proposal point
         				
         	pi_Y<-li_func(k_Y,...)		        # evaluate likelihood at proposal point
         		
