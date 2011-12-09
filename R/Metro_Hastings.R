@@ -1,5 +1,5 @@
 Metro_Hastings <-
-function(li_func,pars,prop_sigma=diag(1,length(pars)),par_names=NULL,iterations=50000,burn_in=1000,adapt_par=c(100,20,0.5,0.75),quiet=FALSE,compile=FALSE,...)
+function(li_func,pars,prop_sigma=NULL,par_names=NULL,iterations=50000,burn_in=1000,adapt_par=c(100,20,0.5,0.75),quiet=FALSE,compile=FALSE,...)
 {
     if (!is.finite(li_func(pars, ...))) 
         stop("Seed parameter values <pars> are not in the defined parameter space.  Try new starting values for <pars>.")
@@ -7,11 +7,19 @@ function(li_func,pars,prop_sigma=diag(1,length(pars)),par_names=NULL,iterations=
     if (is.null(par_names))
         par_names<-letters[1:length(pars)]
 
-    if(dim(prop_sigma)[1] != length(pars) || dim(prop_sigma)[2] != length(pars))
+    if( ( dim(prop_sigma)[1] != length(pars) ||  dim(prop_sigma)[2] != length(pars) ) && !is.null(prop_sigma) )
         stop("prop_sigma not of dimension length(pars) x length(pars)")
 
     if(compile)
         try(li_func<-cmpfun(li_func))
+
+    if(is.null(prop_sigma)) #if no proposal matrix given, estimate the Fisher information to use as the diagonal (start in the right variance scale)
+    {
+        fit<-optim(pars,li_func,control=list("fnscale"=-1),hessian=TRUE,...)
+        fisher_info<-solve(-fit$hessian)
+        prop_sigma<-sqrt(diag(fisher_info))
+        prop_sigma<-diag(prop_sigma)
+    }
 
     prop_sigma<-makePositiveDefinite(prop_sigma)
 	mu<-pars

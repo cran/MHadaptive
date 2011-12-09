@@ -1,3 +1,7 @@
+1.1-5
+######## 12-09-11
+estimate starting point for the proposal matrix using the fisher information matrix by solving the Hessian as estimated by optim()
+
 1.1-4
 ######## 11-05-11
 Cleaned up depreciated dependencies. No longer relies on QRMlib.

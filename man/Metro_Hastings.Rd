@@ -10,7 +10,7 @@ The function \code{Metro_Hastings} performs a general Metropolis-Hastings sampli
 
 
 \usage{
-Metro_Hastings(li_func, pars, prop_sigma = diag(1, length(pars)), 
+Metro_Hastings(li_func, pars, prop_sigma = NULL, 
     par_names = NULL, iterations = 50000, burn_in = 1000, 
     adapt_par = c(100, 20, 0.5, 0.75), quiet = FALSE, compile= FALSE,...)
 }
@@ -23,7 +23,7 @@ user defined function (target distribution) which describes a Bayesian model to 
 vector of initial parameter values defining the starting position of the Markov Chain.
 }
   \item{prop_sigma}{
-covariance matrix giving the covariance of the proposal distribution.  This matrix need not be positive definite.  If the covariance structure of the target distribution is known (approximately), it can be given here.
+covariance matrix giving the covariance of the proposal distribution.  This matrix need not be positive definite.  If the covariance structure of the target distribution is known (approximately), it can be given here. If not given, the diagonal will be estimated via the Fisher information matrix.
 }
   \item{par_names}{
 character vector providing the names of each parameter in the model.
