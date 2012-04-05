@@ -12,7 +12,7 @@ The function \code{Metro_Hastings} performs a general Metropolis-Hastings sampli
 \usage{
 Metro_Hastings(li_func, pars, prop_sigma = NULL, 
     par_names = NULL, iterations = 50000, burn_in = 1000, 
-    adapt_par = c(100, 20, 0.5, 0.75), quiet = FALSE, compile= FALSE,...)
+    adapt_par = c(100, 20, 0.5, 0.75), quiet = FALSE,...)
 }
 
 \arguments{
@@ -39,9 +39,6 @@ vector of tuning parameters for the proposal covariance adaptation. Default is \
 }
   \item{quiet}{
 logical: set to TRUE to suppress printing of chain status.
-}
-  \item{compile}{
-logical: set to TRUE to try using \code{cmpfun()} to compile the likelihood function.  In some cases, this can help speed up the sampling.
 }
   \item{\dots}{
 additional arguments to be passed to \code{li_func}.

@@ -1,3 +1,12 @@
+1.1-7
+######## 03-05-12
+Fixed one-dimensional initial prop_sigma estimation
+Added posterior mean to BCI() value.
+
+1.1-6
+######## 12-20-11
+Removed dependency on depreciated compiler package.
+
 1.1-5
 ######## 12-09-11
 estimate starting point for the proposal matrix using the fisher information matrix by solving the Hessian as estimated by optim()
@@ -22,5 +31,3 @@ Default printing of MHposterior objects that doesn't barf the whole trace
 
 ######## 06-04-11
 Non-NULL DIC for one-dimensional models
-
-
